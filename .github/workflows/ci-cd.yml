@@ -1,0 +1,73 @@
+
+name: Calculator CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      # Send Slack notification on test success with a green checkmark emoji
+      - name: Send Slack notification on test success
+        if: success()  # Only send this if tests are successful
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":":white_check_mark: Tests passed successfully!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # Send Slack notification on test failure with a red cross emoji
+      - name: Send Slack notification on test failure
+        if: failure()  # Only send this if tests fail
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":":x: Tests failed!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/calculator-app:${{ github.sha }} .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/calculator-app:${{ github.sha }}
+
+      # Send Slack notification on Docker push success with a green checkmark emoji
+      - name: Send Slack notification on Docker push success
+        if: success()  # Only send this if push is successful
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":":white_check_mark: Docker image pushed to Docker Hub successfully!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # Send Slack notification on Docker push failure with a red cross emoji
+      - name: Send Slack notification on Docker push failure
+        if: failure()  # Only send this if push fails
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":":x: Docker image push to Docker Hub failed!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
