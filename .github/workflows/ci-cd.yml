@@ -54,11 +54,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/calculator-app:${{ github.sha }} .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/TicTacToe-app:${{ github.sha }} .
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/calculator-app:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/TicTacToe-app:${{ github.sha }}
 
       # Send Slack notification on Docker push success with a green checkmark emoji
       - name: Send Slack notification on Docker push success
