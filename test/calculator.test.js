@@ -120,9 +120,9 @@
 const { createBoard, handleCellClick, resetGame } = require('../script');
 
 
-beforeEach(() => {
-  resetGame();
-});
+// beforeEach(() => {
+//   resetGame();
+// });
 
 describe('Tic Tac Toe', () => {
 
