@@ -1,17 +1,3 @@
-// const { createBoard, handleCellClick, resetGame } = require('../script');
-
-// describe('Tic Tac Toe', () => {
-
- 
-//   test('initial board should be empty', () => {
-//     const board = Array.from(document.querySelectorAll('.cell'));
-//     board.forEach(cell => expect(cell.textContent).toBe(''));
-//   });
-
-
-// });
-
-
 const { createBoard, handleCellClick, resetGame } = require('../script');
 
 describe('Tic Tac Toe', () => {
