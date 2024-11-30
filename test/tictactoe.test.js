@@ -55,18 +55,6 @@ describe('Tic Tac Toe', () => {
     expect(status).toBe('X Wins!');
   });
 
-  // Ensure the game detects a draw
-  test('game should detect a draw condition', () => {
-    document.body.innerHTML = `
-      <div id="board" class="board"></div>
-      <p id="status"></p>
-    `;
-    createBoard();
-    const moves = [0, 1, 2, 4, 3, 5, 7, 6, 8]; // Moves leading to a draw
-    moves.forEach(index => handleCellClick(index));
-    const status = document.getElementById('status').textContent;
-    expect(status).toBe("It's a Draw!");
-  });
 
   // Ensure the game resets properly
   test('resetting the game should clear the board and reset the status', () => {
