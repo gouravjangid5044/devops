@@ -1,5 +1,5 @@
 
-name: Calculator CI/CD Pipeline
+name: TicTacToe CI/CD Pipeline
 
 on:
   push:
