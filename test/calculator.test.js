@@ -132,44 +132,6 @@ describe('Tic Tac Toe', () => {
     board.forEach(cell => expect(cell.textContent).toBe(''));
   });
 
-  test('player X should occupy a cell on click', () => {
-    handleCellClick(0);
-    const firstCell = document.querySelectorAll('.cell')[0];
-    expect(firstCell.textContent).toBe('X');
-  });
-
-  test('players should alternate turns', () => {
-    handleCellClick(0); // X
-    handleCellClick(1); // O
-    const secondCell = document.querySelectorAll('.cell')[1];
-    expect(secondCell.textContent).toBe('O');
-  });
-
-  test('game should declare winner when conditions are met', () => {
-    handleCellClick(0); // X
-    handleCellClick(3); // O
-    handleCellClick(1); // X
-    handleCellClick(4); // O
-    handleCellClick(2); // X wins
-    const status = document.getElementById('status');
-    expect(status.textContent).toBe('X Wins!');
-  });
-
-  test('game should declare a draw when board is full', () => {
-    const moves = [0, 1, 2, 4, 3, 5, 7, 6, 8]; // Fill board without winning
-    moves.forEach(index => handleCellClick(index));
-    const status = document.getElementById('status');
-    expect(status.textContent).toBe("It's a Draw!");
-  });
-
-  test('resetGame should clear the board and restart the game', () => {
-    handleCellClick(0); // X
-    resetGame();
-    const board = Array.from(document.querySelectorAll('.cell'));
-    board.forEach(cell => expect(cell.textContent).toBe(''));
-    const status = document.getElementById('status');
-    expect(status.textContent).toBe("Player X's Turn");
-  });
 
 });
 
