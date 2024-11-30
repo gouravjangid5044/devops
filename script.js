@@ -116,6 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+module.exports = { createBoard, handleCellClick, resetGame };
+
+
 
 
 
